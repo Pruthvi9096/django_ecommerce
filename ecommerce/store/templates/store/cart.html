@@ -13,14 +13,16 @@
 
                 <tr>
                     <th>
-                        <h5>Items: <strong>{{items_count}}</strong></h5>
+                        <h5>Items: <strong>{{order.get_items_count}}</strong></h5>
                     </th>
                     <th>
-                        <h5>Total:<strong> ${{total_price}}</strong></h5>
+                        <h5>Total:<strong> ${{order.get_total_price | floatformat:2}}</strong></h5>
                     </th>
                     <th>
+                        {% if items %}
                         <a style="float:right; margin:5px;" class="btn btn-success"
                             href="{% url 'checkout' %}">Checkout</a>
+                        {% endif %}
                     </th>
                 </tr>
             </table>
@@ -43,20 +45,20 @@
                     <p>{{item.product.name}}</p>
                 </div>
                 <div style="flex:1">
-                    <p>${{item.product.price}}</p>
+                    <p>${{item.product.price | floatformat:2}}</p>
                 </div>
                 <div style="flex:1">
                     <p class="quantity">{{item.quantity}}</p>
                     <div class="quantity">
-                        <img class="chg-quantity" src="{% static  'image/arrow-up.png' %}">
+                        <img class="chg-quantity update-cart" data-product="{{item.product.id}}" data-action="add" src="{% static  'image/arrow-up.png' %}">
 
-                        <img class="chg-quantity" src="{% static  'image/arrow-down.png' %}">
+                        <img class="chg-quantity update-cart" data-product="{{item.product.id}}" data-action="remove" src="{% static  'image/arrow-down.png' %}">
                     </div>
                 </div>
                 <div style="flex:1">
-                    <p>${{item.totalPrice}}</p>
+                    <p>${{item.totalPrice | floatformat:2}}</p>
                 </div>
-            </div>
+            </div></span>
             {% endfor %}
 
         </div>
