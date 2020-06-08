@@ -1,13 +1,23 @@
 from django.shortcuts import render
 from .models import Customer,Order,OrderItem,Product,ShippingAddress
 from django.http import JsonResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import datetime
 import json
 
 from .utils import cookieCart
 
 def store(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('id')
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(products, 6)
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
     if request.user.is_authenticated:
         customer = request.user.customer
         order, create = Order.objects.get_or_create(customer=customer,complete=False)
