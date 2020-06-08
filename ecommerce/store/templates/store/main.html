@@ -28,6 +28,24 @@
       return cookieValue;
     }
     var csrftoken = getToken('csrftoken');
+
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0;i < ca.length;i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    var cart = JSON.parse(getCookie('cart'));
+    if (cart == undefined) {
+      cart = {}
+      document.cookie = "cart="+JSON.stringify(cart)+";domain=;path=/"
+    }
+    console.log(cart)
   </script>
 </head>
 
@@ -53,7 +71,7 @@
         <a href="{% url 'cart' %}">
           <img id="cart-icon" src="{% static 'image/cart.png' %}">
         </a>
-        <p id="cart-total">0</p>
+        <p id="cart-total">{{order.get_items_count}}</p>
 
       </div>
     </div>
