@@ -56,3 +56,11 @@ function updateCartItem(productId, action) {
         })
 
 }
+var search = document.getElementById('search-form');
+search.addEventListener('submit',function(e){
+    e.preventDefault();
+    var q = search.query.value
+    if (q !== null && q!== undefined && q !== ''){
+        window.location.href="/?q="+q;
+    }
+})

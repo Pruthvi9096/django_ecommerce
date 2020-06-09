@@ -1,9 +1,21 @@
 {% extends 'store/main.html' %}
 {% block content %}
+
+<div class="col-md-8 mx-auto">
+    <form id='search-form' class="input-group">
+      <input id="query" name="query" type="text" value="{% if q %}{{q}}{% endif %}" class="form-control" placeholder="Search products">
+      <div class="input-group-append">
+        <button class="btn btn-secondary" type="submit">
+          <i class="fa fa-search">Search</i>
+        </button>
+      </div>
+    </form>
+</div>
+
 <div class="row">
     {% for product in products %}
     <div class="col-lg-4">
-        <img class="thumbnail" src="{{product.imageUrl}}">
+        <img class="thumbnail" src="{{product.imageUrl}}" alt="{{product.name}}">
         <div class="box-element product">
             <h6><strong>{{product.name}}</strong></h6>
             <hr>
@@ -18,6 +30,11 @@
 </div>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-start mt-3">
+    {% if not products.has_previous%}
+    <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">Previous</a>
+    </li>
+    {% endif %}
     {% if products.has_previous%}
       <li class="page-item">
         <a class="page-link" href="?page={{products.previous_page_number}}" tabindex="-1">Previous</a>
@@ -35,6 +52,11 @@
         <a class="page-link" href="?page={{products.next_page_number}}">Next</a>
       </li>
       {% endif %}
+      {% if not products.has_next%}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Next</a>
+        </li>
+        {% endif %}
     </ul>
   </nav>
 {% endblock content %}

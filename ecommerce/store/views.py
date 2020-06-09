@@ -10,7 +10,10 @@ from .utils import cookieCart
 def store(request):
     products = Product.objects.all().order_by('id')
     page = request.GET.get('page', 1)
-
+    q = request.GET.get('q',False)
+    if q:
+        print(q)
+        products = Product.objects.filter(name__icontains=q)
     paginator = Paginator(products, 6)
     try:
         products = paginator.page(page)
@@ -24,7 +27,7 @@ def store(request):
     else:
         cart = cookieCart(request)
         order = cart['order']
-    context = {'products':products,'order':order}
+    context = {'products':products,'order':order,'q':q}
     return render(request, 'store/store.html', context)
 
 def cart(request):
