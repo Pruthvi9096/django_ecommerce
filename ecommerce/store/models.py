@@ -82,3 +82,19 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+class AdPoster(models.Model):
+    name = models.CharField(max_length=200,null=True)
+    posterImage = models.ImageField(upload_to='image',null=True,blank=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name
+    
+    @property
+    def posterImageUrl(self):
+        try:
+            url = self.posterImage.url
+        except:
+            url = ''
+        return url

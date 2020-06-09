@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Customer,Order,OrderItem,Product,ShippingAddress
+from .models import Customer,Order,OrderItem,Product,ShippingAddress,AdPoster
 from django.http import JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import datetime
@@ -27,7 +27,8 @@ def store(request):
     else:
         cart = cookieCart(request)
         order = cart['order']
-    context = {'products':products,'order':order,'q':q}
+    posters = AdPoster.objects.all()
+    context = {'products':products,'order':order,'q':q,'posters':posters}
     return render(request, 'store/store.html', context)
 
 def cart(request):
