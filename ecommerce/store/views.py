@@ -1,14 +1,15 @@
 from django.shortcuts import render
-from .models import Customer,Order,OrderItem,Product,ShippingAddress,AdPoster
+from .models import Customer,Order,OrderItem,Product,ShippingAddress,AdPoster,SubCategory,Category
 from django.http import JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import datetime
 import json
+from django.db.models import Avg
 
 from .utils import cookieCart
 
 def store(request):
-    products = Product.objects.all().order_by('id')
+    products = Product.objects.annotate(rating=Avg('ratings')).order_by('id')
     page = request.GET.get('page', 1)
     q = request.GET.get('q',False)
     if q:
@@ -28,7 +29,8 @@ def store(request):
         cart = cookieCart(request)
         order = cart['order']
     posters = AdPoster.objects.all()
-    context = {'products':products,'order':order,'q':q,'posters':posters}
+    categories = Category.objects.all()
+    context = {'products':products,'order':order,'q':q,'posters':posters,'categories':categories}
     return render(request, 'store/store.html', context)
 
 def cart(request):
@@ -43,6 +45,10 @@ def cart(request):
 
     context = {'items':items,'order':order}
     return render(request, 'store/cart.html', context)
+
+def productDetail(request):
+    context = {}
+    return render(request,'store/product.html',context)
 
 def checkout(request):
     if request.user.is_authenticated:

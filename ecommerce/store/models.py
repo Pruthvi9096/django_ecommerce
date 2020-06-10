@@ -1,6 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+Rating = [
+    (1,'1'),
+    (2,'2'),
+    (3,'3'),
+    (4,'4'),
+    (5,'5')
+]
+
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE ,null=True, blank=True)
     name = models.CharField(max_length=100,null=True)
@@ -9,11 +17,47 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
+class Category(models.Model):
+    name = models.CharField(max_length=200,null=True)
+    description = models.TextField(max_length=700, null=True, blank=True)
+    image = models.ImageField(upload_to='image',null=True,blank=True)
+
+    def __str__(self):
+        return self.name
+    
+    @property
+    def imageUrl(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
+class SubCategory(models.Model):
+    name = models.CharField(max_length=200,null=True)
+    description = models.TextField(max_length=700, null=True, blank=True)
+    image = models.ImageField(upload_to='image',null=True,blank=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+    
+    @property
+    def imageUrl(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
 class Product(models.Model):
     name = models.CharField(max_length=200,null=True)
+    description = models.TextField(max_length=700, null=True, blank=True)
+    category = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True, blank=True)
     price = models.DecimalField(max_digits=7,decimal_places=2)
     digital = models.BooleanField(default=False, null=True, blank=False)
     image = models.ImageField(upload_to='image',null=True,blank=True)
+    ratings = models.IntegerField(choices=Rating,null=True,blank=True)
 
     def __str__(self):
         return self.name
