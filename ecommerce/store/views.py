@@ -9,7 +9,7 @@ from django.db.models import Avg
 from .utils import cookieCart
 
 def store(request):
-    products = Product.objects.annotate(rating=Avg('ratings')).order_by('id')
+    products = Product.objects.all().order_by('id')
     page = request.GET.get('page', 1)
     q = request.GET.get('q',False)
     if q:

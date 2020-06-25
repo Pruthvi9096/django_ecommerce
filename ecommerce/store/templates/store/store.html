@@ -41,7 +41,7 @@
         <nav class="navigation">
             <ul class="mainmenu">
             {% for category in categories %}
-              <li><a href="#">{{category.name}}</a>
+              <li><a href="#">{{category.name.upper}}</a>
                 <ul class="submenu">
                 {% for sub in category.subcategory_set.all %}
                   <li><a href="">{{sub.name}}</a></li>
@@ -59,7 +59,7 @@
         <div class="row">
         {% for product in products %}
           <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100 box-element" onclick="parent.location='{% url 'product_detail' %}'">
+            <div class="card h-100 box-element">
               <img class="card-img-top thumbnail" src="{{product.imageUrl}}" alt="">
               <div class="card-body">
                 <h4 class="card-title">
@@ -69,9 +69,8 @@
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
               </div>
               <div class="card-footer">
-                <fieldset class="starability-result mx-auto" data-rating="{{ product.rating }}">
-                    Rated: {{ product.rating }} stars
-                </fieldset>
+                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                <a class="btn btn-outline-success" href="#">View</a>
               </div>
             </div>
           </div>
