@@ -1,6 +1,27 @@
 {% extends 'store/main.html' %}
 {% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Categories
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {% for category in categories %}
+          <a class="dropdown-item" href="#">{{category.name}}</a>
+          {% endfor %}
+        </div>
+      </li>
+     
+  </div>
+</nav>
 <div class="col-md-8 mx-auto">
     <form id='search-form' class="input-group">
       <input id="query" name="query" type="text" value="{% if q %}{{q}}{% endif %}" class="form-control" placeholder="Search products">
@@ -59,7 +80,7 @@
         <div class="row">
         {% for product in products %}
           <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100 box-element">
+            <div class="card h-100 box-element" onMouseOver = "style.transform='scale(1.01,1.01)'" onMouseOut = "style.transform='scale(1,1)'">
               <img class="card-img-top thumbnail" src="{{product.imageUrl}}" alt="">
               <div class="card-body">
                 <h4 class="card-title">
