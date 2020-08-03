@@ -9,6 +9,12 @@ Ecommerce Website made with django
 
 ### Screenshots:
 
-- store view
- ![Image of Store]
- (https://pasteboard.co/JkCeAMf.png)
+#### store view
+ ![Image of Store](https://i.stack.imgur.com/Dr36B.png)
+
+
+#### cart view
+ ![Image of Cart](https://i.stack.imgur.com/03GFF.png)
+ 
+#### checkout view
+ ![Image of Checkout](https://i.stack.imgur.com/9GXIR.png)
