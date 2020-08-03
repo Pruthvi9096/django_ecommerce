@@ -2,12 +2,13 @@
 Ecommerce Website made with django
 
 
-###Features:
+### Features:
 - Customer, Product, Category, Cart and Checkout models
 - Cookie-cart for non-authenticated users
 - Custom Authentication
 
-###Screenshots:
+### Screenshots:
 
--store view
-![Image of Store](https://pasteboard.co/JkCeAMf.png)
+- store view
+ ![Image of Store]
+ (https://pasteboard.co/JkCeAMf.png)
